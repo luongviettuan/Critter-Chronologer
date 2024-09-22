@@ -31,6 +31,4 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<PetEntity> pets;
 
-    @ManyToMany(mappedBy = "customers")
-    private List<ScheduleEntity> schedules;
 }

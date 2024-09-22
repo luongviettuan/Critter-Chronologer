@@ -28,11 +28,6 @@ public class ScheduleEntity {
     private Long id;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="schedule_customer", joinColumns = @JoinColumn(name = "schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id"))
-    private List<CustomerEntity> customers;
-
-    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="schedule_employee", joinColumns = @JoinColumn(name="schedule_id"),
             inverseJoinColumns = @JoinColumn(name="employee_id"))
     private List<EmployeeEntity> employees;
