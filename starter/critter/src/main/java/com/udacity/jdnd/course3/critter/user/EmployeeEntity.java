@@ -20,7 +20,7 @@ import java.util.Set;
 public class EmployeeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
