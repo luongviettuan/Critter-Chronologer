@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.exception.BusinessException;
 import com.udacity.jdnd.course3.critter.user.CustomerDTO;
 import com.udacity.jdnd.course3.critter.user.CustomerEntity;
 import com.udacity.jdnd.course3.critter.user.CustomerRepository;
@@ -48,21 +49,21 @@ public class PetService {
         return result;
     }
 
-    public PetDTO getPetById(Long petId) {
+    public PetDTO getPetById(Long petId) throws BusinessException {
          Optional<PetEntity> petEntityOptional = petRepository.findById(petId);
-         if (petEntityOptional.isPresent()) {
-             PetEntity petEntity = petEntityOptional.get();
-
-             PetDTO petDTO = new PetDTO();
-             petDTO.setId(petEntity.getId());
-             petDTO.setType(petEntity.getType());
-             petDTO.setName(petEntity.getName());
-             petDTO.setOwnerId(petEntity.getCustomer().getId());
-             petDTO.setBirthDate(petEntity.getBirthDate());
-             petDTO.setNotes(petEntity.getNotes());
-             return petDTO;
+         if (!petEntityOptional.isPresent()) {
+             throw new BusinessException("NOK", "Cannot find pet have id: " + petId);
          }
-         return null;
+        PetEntity petEntity = petEntityOptional.get();
+
+        PetDTO petDTO = new PetDTO();
+        petDTO.setId(petEntity.getId());
+        petDTO.setType(petEntity.getType());
+        petDTO.setName(petEntity.getName());
+        petDTO.setOwnerId(petEntity.getCustomer().getId());
+        petDTO.setBirthDate(petEntity.getBirthDate());
+        petDTO.setNotes(petEntity.getNotes());
+        return petDTO;
     }
 
     public List<PetDTO> getPetsByOwnerId(long ownerId) {
@@ -107,5 +108,21 @@ public class PetService {
             if (petEntity.getId() != null) petIds.add(petEntity.getId());
         }
         return petIds;
+    }
+
+    public List<PetDTO> getAllPets() {
+        List<PetEntity> petEntities = petRepository.findAll();
+        List<PetDTO> petDTOList = new ArrayList<>();
+        for (PetEntity petEntity : petEntities ) {
+            PetDTO petDTO = new PetDTO();
+            petDTO.setId(petEntity.getId());
+            petDTO.setType(petEntity.getType());
+            petDTO.setName(petEntity.getName());
+            petDTO.setOwnerId(petEntity.getCustomer().getId());
+            petDTO.setBirthDate(petEntity.getBirthDate());
+            petDTO.setNotes(petEntity.getNotes());
+            petDTOList.add(petDTO);
+        }
+        return petDTOList;
     }
 }

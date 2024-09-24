@@ -43,13 +43,21 @@ public class EmployeeService {
         else return null;
     }
 
-    public void updateDaysAvailable(Set<DayOfWeek> daysAvailable, long employeeId) {
+    public EmployeeDTO updateDaysAvailable(Set<DayOfWeek> daysAvailable, long employeeId) {
         Optional<EmployeeEntity> employeeEntityOptional = employeeRepository.findById(employeeId);
         if(employeeEntityOptional.isPresent()) {
             EmployeeEntity employeeEntity = employeeEntityOptional.get();
             employeeEntity.setDaysAvailable(daysAvailable);
             employeeRepository.save(employeeEntity);
+
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            employeeDTO.setId(employeeEntity.getId());
+            employeeDTO.setName(employeeEntity.getName());
+            employeeDTO.setSkills(employeeEntity.getSkills());
+            employeeDTO.setDaysAvailable(employeeEntity.getDaysAvailable());
+            return employeeDTO;
         }
+        return null;
     }
 
     public List<EmployeeDTO> findEmployeesForService(EmployeeRequestDTO employeeDTO) {

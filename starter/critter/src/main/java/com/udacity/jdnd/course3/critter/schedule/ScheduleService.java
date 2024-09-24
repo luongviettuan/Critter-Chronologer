@@ -112,17 +112,6 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> getScheduleForCustomer(long customerId) {
-        // find customer entity by id
-//        Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(customerId);
-////        if (customerEntityOptional.isPresent()) {
-////            // find pet list of custoemr
-////
-////
-////            CustomerEntity customerEntity = customerEntityOptional.get();
-////            List<ScheduleEntity> scheduleEntities = customerEntity.getSchedules();
-////            return convertScheduleEntitiesToScheduleDTO(scheduleEntities);
-////        }
-////        return null;
         // find all pets by customer id
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
         List<PetEntity> petEntities = petRepository.findByCustomerId(customerId);

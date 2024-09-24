@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @PutMapping("/employee/{employeeId}")
-    public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        employeeService.updateDaysAvailable(daysAvailable, employeeId);
+    public EmployeeDTO setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
+        return employeeService.updateDaysAvailable(daysAvailable, employeeId);
     }
 
     @GetMapping("/employee/availability")
